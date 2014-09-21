@@ -1,0 +1,38 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    x:Class="MusicDownloader.Views.SearchView"
+    mc:Ignorable="d" d:DesignWidth="300" Width="Auto" MinWidth="590"
+    MinHeight="343">
+    <Grid>
+        <ListBox Margin="40,79,40,53"
+			ItemsSource="{Binding Videos}" DisplayMemberPath="Title" SelectedItem="{Binding SelectedVideo}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <ei:CallMethodAction MethodName="StopListening" TargetObject="{Binding}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
+        <Label Content="Search song" HorizontalAlignment="Left" Margin="40,10,0,0" VerticalAlignment="Top"
+			FontWeight="Bold" FontSize="16" />
+        <TextBox x:Name="SearchText" Height="23" Margin="40,46,150,0" TextWrapping="Wrap"
+			VerticalAlignment="Top"
+			Text="{Binding SearchText, Mode=TwoWay, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" />
+        <Button x:Name="Search" Content="Search" Margin="0,46,40,0" VerticalAlignment="Top" Height="23"
+			Command="{Binding SearchCommand}" IsDefault="True" HorizontalAlignment="Right" Width="100" />
+        <MediaElement x:Name="MediaElement" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="35"
+			Visibility="Collapsed" Source="{Binding MediaSource}" Volume="1"
+			LoadedBehavior="{Binding MediaState}" Margin="300,40,0,0" />
+        <Button x:Name="Download" Content="Download" Margin="0,0,40,20"
+			Command="{Binding DownloadCommand}" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+			Width="100" />
+        <ToggleButton x:Name="ListenStop" Command="{Binding ListenCommand}" Content="Listen" Margin="40,0,0,20"
+			VerticalAlignment="Bottom" Height="23"
+			HorizontalAlignment="Left" Width="100" Style="{DynamicResource ToggleButtonListenStyle}"
+			IsChecked="{Binding IsPlaying}" />
+    </Grid>
+</UserControl>
